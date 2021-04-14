@@ -90,10 +90,13 @@ def run():
     pidlist = psutil.process_iter()
     for proc in pidlist:
         if proc.name() in banList:
-            # print("catch!")
+            print("catch!")
             pid = proc.pid
             location = psutil.Process(pid).exe()
             proc.kill()
+            for proc1 in pidlist:
+                if proc1.name() in banList and proc1.name() != proc.name():
+                    proc1.kill()
             if vaf():
                 try:
                     msgbox(title="提示", msg="一小时后会准时关闭游戏，无论你是否正在游戏中！")
